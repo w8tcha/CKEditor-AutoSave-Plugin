@@ -26,54 +26,37 @@ Licensed under the terms of the MIT License.
 config.extraPlugins = 'autosave';
 ````
 
-#####Optional
-
-####Auto save Key
-The Default autosavekey can be overridden from the config ...
-
-````js
-config.autosave_SaveKey = 'autosaveKey';
-````
-
-####Ignore Content older then X
-The Default Minutes (Default is 1440 which is one day) after the auto saved content is ignored can be overidden from the config ...
-
-````js
-config.autosave_NotOlderThen = 1440;
-````
-
-####Save Content on Destroy
-Setting to Save content on editor destroy (Default is false) ...
-
-````js
-config.autosave_saveOnDestroy = false;
-````
-
-####Save Detection Selectors
-Setting to set the Save button to inform the plugin when the content is saved by the user and doesn't need to be stored temporary ...
-
-````js
-config.autosave_saveDetectionSelectors = "a[href^='javascript:__doPostBack'][id*='Save'],a[id*='Cancel']";
-````
-
-####Notification Type
-Setting to set the if you want to show the "Auto Saved" message, and if yes you can show as Notification or as Message in the Status bar (Default is "notification")
-
-````js
-// Show as Notification
-config.autosave_messageType = "notification";
-````
-
-````js
-// Show in the Status Bar
-config.autosave_messageType = "statusbar";
-````
+#####To Configure the Plugin the following options are available...
 
 
 ````js
-// Show no Message
-config.autosave_messageType = "no";
+config.autosave = { 
+      // Auto save Key - The Default autosavekey can be overridden from the config ...
+      Savekey : "autosaveKey",
+
+      // Ignore Content older then X
+      //The Default Minutes (Default is 1440 which is one day) after the auto saved content is ignored can be overidden from the config ...
+      NotOlderThen : 1440,
+
+      // Save Content on Destroy - Setting to Save content on editor destroy (Default is false) ...
+      saveOnDestroy : false,
+
+
+      // Setting to set the Save button to inform the plugin when the content is saved by the user and doesn't need to be stored temporary ...
+      saveDetectionSelectors : "a[href^='javascript:__doPostBack'][id*='Save'],a[id*='Cancel']",
+
+      // Notification Type - Setting to set the if you want to show the "Auto Saved" message, and if yes you can show as Notification or as Message in the Status bar (Default is "notification")
+      messageType : "notification",
+
+     // Show in the Status Bar
+     //messageType : "statusbar",
+
+     // Show no Message
+     //messageType : "no",
+
+     // Delay
+     delay : 10
+
+};
 ````
-
-
 
