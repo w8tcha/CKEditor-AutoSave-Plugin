@@ -57,8 +57,7 @@ config.autosave = {
      delay : 10,
 
      // The Default Diff Type for the Compare Dialog, you can choose between "sideBySide" or "inline". Default is "sideBySide"
-     diffTyoe : "sideBySide"     
-
+     diffType : "sideBySide"     
 };
 ````
 
