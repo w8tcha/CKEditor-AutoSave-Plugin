@@ -41,7 +41,6 @@ config.autosave = {
       // Save Content on Destroy - Setting to Save content on editor destroy (Default is false) ...
       saveOnDestroy : false,
 
-
       // Setting to set the Save button to inform the plugin when the content is saved by the user and doesn't need to be stored temporary ...
       saveDetectionSelectors : "a[href^='javascript:__doPostBack'][id*='Save'],a[id*='Cancel']",
 
@@ -55,7 +54,10 @@ config.autosave = {
      //messageType : "no",
 
      // Delay
-     delay : 10
+     delay : 10,
+
+     // The Default Diff Type for the Compare Dialog, you can choose between "sideBySide" or "inline". Default is "sideBySide"
+     diffTyoe : "sideBySide"     
 
 };
 ````
