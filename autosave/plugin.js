@@ -12,7 +12,7 @@
     CKEDITOR.plugins.add("autosave", {
         lang: 'ca,cs,de,en,es,fr,ja,nl,pl,pt-br,ru,sv,zh,zh-cn', // %REMOVE_LINE_CORE%
         requires: 'notification',
-        version: 0.14,
+        version: 0.15,
         init: function (editor) {
             // Default Config
             var defaultConfig = {
@@ -28,11 +28,14 @@
             // Get Config & Lang
             var config = CKEDITOR.tools.extend(defaultConfig, editor.config.autosave || {}, true);
 
+            if (editorInstance.plugins.textselection && config.messageType == "statusbar") {
+                config.messageType = "notification";
+            }
 
             CKEDITOR.document.appendStyleSheet(CKEDITOR.getUrl(CKEDITOR.plugins.getPath('autosave') + 'css/autosave.min.css'));
 
             editor.on('uiSpace', function(event) {
-                if (event.data.space == 'bottom' && config.autosave_messageType != null && config.autosave_messageType == "statusbar") {
+                if (event.data.space == 'bottom' && config.messageType != null && config.messageType == "statusbar") {
 
                     event.data.html += '<div class="autoSaveMessage" unselectable="on"><div unselectable="on" id="'
                         + autoSaveMessageId(event.editor)
@@ -46,7 +49,7 @@
                 if (typeof (jQuery) === 'undefined') {
                     CKEDITOR.scriptLoader.load('//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js', function() {
                         jQuery.noConflict();
-                        
+
                         loadPlugin(editor, config);
                     });
 
@@ -82,10 +85,10 @@
 
         editorInstance.on('destroy', function() {
             if (saveOnDestroy) {
-                SaveData(autoSaveKey, editorInstance);
+                SaveData(autoSaveKey, editorInstance, config);
             }
         });
-        
+
         editorInstance.config.autosave_timeOutId = 0;
     }
 
@@ -104,6 +107,7 @@
 
     };
     var onTimer = function (configAutosave, editorInstance) {
+        editorInstance.config.autosave_timeOutId = 0;
         if (savingActive) {
             startTimer(configAutosave, editorInstance);
         } else if (editorInstance.checkDirty() || editorInstance.plugins.bbcode) {
@@ -113,7 +117,6 @@
 
             SaveData(autoSaveKey, editor);
 
-            editor.config.autosave_timeOutId = 0;
             savingActive = false;
         }
     };
@@ -241,12 +244,16 @@
         return JSON.parse(compressedJSON);
     }
 
-    function SaveData(autoSaveKey, editorInstance) {
+    function SaveData(autoSaveKey, editorInstance, config) {
         var compressedJSON = LZString.compressToUTF16(JSON.stringify({ data: editorInstance.getData(), saveTime: new Date() }));
         localStorage.setItem(autoSaveKey, compressedJSON);
 
-        var messageType = editorInstance.config.autosave_messageType != null ? editorInstance.config.autosave_messageType : "notification";
-        
+        var messageType = config.messageType != null ? config.messageType : "notification";
+
+        if (editorInstance.plugins.textselection && messageType == "statusbar") {
+            messageType = "notification";
+        }
+
         if (messageType == "statusbar") {
                 var autoSaveMessage = document.getElementById(autoSaveMessageId(editorInstance));
 
