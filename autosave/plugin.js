@@ -28,7 +28,7 @@
             // Get Config & Lang
             var config = CKEDITOR.tools.extend(defaultConfig, editor.config.autosave || {}, true);
 
-            if (editorInstance.plugins.textselection && config.messageType == "statusbar") {
+            if (editor.plugins.textselection && config.messageType == "statusbar") {
                 config.messageType = "notification";
             }
 
