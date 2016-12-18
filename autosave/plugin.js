@@ -12,7 +12,7 @@
     CKEDITOR.plugins.add("autosave", {
         lang: 'ca,cs,de,en,es,fr,ja,nl,pl,pt-br,ru,sk,sv,zh,zh-cn', // %REMOVE_LINE_CORE%
         requires: 'notification',
-        version: 0.15,
+        version: 0.16,
         init: function (editor) {
             // Default Config
             var defaultConfig = {
@@ -115,7 +115,7 @@
             var editor = editorInstance,
                 autoSaveKey = configAutosave.SaveKey != null ? configAutosave.SaveKey : 'autosave_' + window.location + "_" + editor.id;
 
-            SaveData(autoSaveKey, editor);
+            SaveData(autoSaveKey, editor, configAutosave);
 
             savingActive = false;
         }
