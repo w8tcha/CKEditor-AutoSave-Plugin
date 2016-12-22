@@ -102,7 +102,7 @@
         if (editorInstance.config.autosave_timeOutId) {
         } else {
             var delay = configAutosave.delay != null ? configAutosave.delay : 10;
-            editorInstance.config.autosave_timeOutId = setTimeout(onTimer(configAutosave, editorInstance), delay * 1000, event);
+            editorInstance.config.autosave_timeOutId = setTimeout(onTimer(configAutosave, editorInstance), delay * 1000);
         }
 
     };
