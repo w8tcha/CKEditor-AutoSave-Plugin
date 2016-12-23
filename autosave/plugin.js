@@ -88,36 +88,33 @@
                 SaveData(autoSaveKey, editorInstance, config);
             }
         });
-
-        editorInstance.config.autosave_timeOutId = 0;
     }
 
     function autoSaveMessageId(editorInstance) {
         return 'cke_autoSaveMessage_' + editorInstance.name;
     }
 
-    var savingActive = false;
-
-    var startTimer = function(configAutosave, editorInstance) {
-        if (editorInstance.config.autosave_timeOutId) {
-        } else {
+    var startTimer = function (configAutosave, editorInstance) {
+        if (editorInstance.config.autosave_timeOutId == null) {
             var delay = configAutosave.delay != null ? configAutosave.delay : 10;
-            editorInstance.config.autosave_timeOutId = setTimeout(onTimer(configAutosave, editorInstance), delay * 1000);
+            editorInstance.config.autosave_timeOutId = setTimeout(function() {
+                    onTimer(configAutosave, editorInstance);
+                },
+                delay * 1000);
         }
-
     };
-    var onTimer = function (configAutosave, editorInstance) {
-        editorInstance.config.autosave_timeOutId = 0;
-        if (savingActive) {
-            startTimer(configAutosave, editorInstance);
-        } else if (editorInstance.checkDirty() || editorInstance.plugins.bbcode) {
-            savingActive = true;
+    function onTimer (configAutosave, editorInstance) {
+        if (editorInstance.checkDirty() || editorInstance.plugins.bbcode) {
             var editor = editorInstance,
-                autoSaveKey = configAutosave.SaveKey != null ? configAutosave.SaveKey : 'autosave_' + window.location + "_" + editor.id;
+                autoSaveKey = configAutosave.SaveKey != null
+                    ? configAutosave.SaveKey
+                    : 'autosave_' + window.location + "_" + editor.id;
 
             SaveData(autoSaveKey, editor, configAutosave);
 
-            savingActive = false;
+            clearTimeout(editorInstance.config.autosave_timeOutId);
+
+            editorInstance.config.autosave_timeOutId = null;
         }
     };
 
