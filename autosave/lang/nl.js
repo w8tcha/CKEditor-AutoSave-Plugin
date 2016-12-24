@@ -8,6 +8,7 @@ CKEDITOR.plugins.setLang('autosave', 'nl', {
     loadSavedContent: 'Een automatisch opgeslagen versie van deze inhoud van "{0}" is gevonden. Wilt u de inhoud van deze versies vergelijken en kiezen welke te laden?',
     title: 'Vergelijk automatisch opgeslagen inhoud met die geladen van de website',
     loadedContent: 'Geladen inhoud',
+    localStorageFull: 'Browser localStorage is full, clear your storage or Increase database size',
     autoSavedContent: 'Automatisch opgeslagen inhoud van: \'',
 	ok: 'Ja, laadt automatisch opgeslagen inhoud',
 	no: 'Nee',

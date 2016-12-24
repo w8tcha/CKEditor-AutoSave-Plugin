@@ -8,6 +8,7 @@ CKEDITOR.plugins.setLang('autosave', 'sk', {
     loadSavedContent: 'Bola nájdená automaticky uložená verzia z "{0}". Chcete porovnať obsah a vybrať verziu, ktorú chcete použiť?',
     title: 'Porovnanie automaticky uloženého obsahu s obsahom nahraným z webu',
     loadedContent: 'Nahraný obsah z webu',
+    localStorageFull: 'Browser localStorage is full, clear your storage or Increase database size',
     autoSavedContent: 'Automaticky uložený obsah z: \'',
 	ok: 'Použiť automaticky uložený obsah',
 	no: 'Použiť obsah z webu',

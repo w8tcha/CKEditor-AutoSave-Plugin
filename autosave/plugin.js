@@ -243,27 +243,42 @@
 
     function SaveData(autoSaveKey, editorInstance, config) {
         var compressedJSON = LZString.compressToUTF16(JSON.stringify({ data: editorInstance.getData(), saveTime: new Date() }));
-        localStorage.setItem(autoSaveKey, compressedJSON);
 
-        var messageType = config.messageType != null ? config.messageType : "notification";
+        var quotaExceeded = false;
 
-        if (editorInstance.plugins.textselection && messageType == "statusbar") {
-            messageType = "notification";
+        try {
+            localStorage.setItem(autoSaveKey, compressedJSON);
+        } catch (e) {
+            quotaExceeded = isQuotaExceeded(e);
+            if (quotaExceeded) {
+                console.log(editorInstance.lang.autosave.localStorageFull);
+            }
         }
 
-        if (messageType == "statusbar") {
+        if (quotaExceeded) {
+            var notificationError = new CKEDITOR.plugins.notification(editorInstance, { message: editorInstance.lang.autosave.localStorageFull, type: 'warning' });
+            notificationError.show();
+        } else {
+            var messageType = config.messageType != null ? config.messageType : "notification";
+
+            if (editorInstance.plugins.textselection && messageType == "statusbar") {
+                messageType = "notification";
+            }
+
+            if (messageType == "statusbar") {
                 var autoSaveMessage = document.getElementById(autoSaveMessageId(editorInstance));
 
                 if (autoSaveMessage) {
                     autoSaveMessage.className = "show";
 
-                    setTimeout(function() {
+                    setTimeout(function () {
                         autoSaveMessage.className = "hidden";
                     }, 2000);
                 }
-        } else if (messageType == "notification") {
-            var notification = new CKEDITOR.plugins.notification(editorInstance, { message: editorInstance.lang.autosave.autoSaveMessage, type: 'success' });
-            notification.show();
+            } else if (messageType == "notification") {
+                var notification = new CKEDITOR.plugins.notification(editorInstance, { message: editorInstance.lang.autosave.autoSaveMessage, type: 'success' });
+                notification.show();
+            }
         }
     }
 
@@ -292,5 +307,28 @@
             contextSize: 3,
             viewType: dialog.getContentElement('general', 'diffType').getValue() == "inline" ? 1 : 0
         }).outerHTML + '</div>');
+    }
+
+    function isQuotaExceeded(e) {
+        var quotaExceeded = false;
+        if (e) {
+            if (e.code) {
+                switch (e.code) {
+                    case 22:
+                        quotaExceeded = true;
+                        break;
+                    case 1014:
+                        // Firefox
+                        if (e.name === 'NS_ERROR_DOM_QUOTA_REACHED') {
+                            quotaExceeded = true;
+                        }
+                        break;
+                }
+            } else if (e.number === -2147024882) {
+                // Internet Explorer 8
+                quotaExceeded = true;
+            }
+        }
+        return quotaExceeded;
     }
 })();
