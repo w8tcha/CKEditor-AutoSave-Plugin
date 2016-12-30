@@ -10,9 +10,9 @@ CKEDITOR.plugins.setLang('autosave', 'zh-cn', {
     loadedContent: '已经加载的内容',
     localStorageFull: 'Browser localStorage is full, clear your storage or Increase database size',
     autoSavedContent: '自动保存的内容: \'',
-	ok: '我确认,加载自动保存的内容',
-	no: '取消',
-	diffType: '选择视图类型:',
-	sideBySide: '并排视图',
-	inline: '内嵌视图'
+  ok: '我确认,加载自动保存的内容',
+  no: '取消',
+  diffType: '选择视图类型:',
+  sideBySide: '并排视图',
+  inline: '内嵌视图'
 });

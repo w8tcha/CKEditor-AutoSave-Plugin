@@ -10,9 +10,9 @@ CKEDITOR.plugins.setLang('autosave', 'ja', {
     loadedContent: '現在保存されている投稿',
     localStorageFull: 'Browser localStorage is full, clear your storage or Increase database size',
     autoSavedContent: '投稿途中だった内容: \'',
-	ok: '投稿途中だった内容（緑）を使う',
-	no: 'いいえ',
-	diffType: '比較モード',
-	sideBySide: '横に並べる',
-	inline: '行ごとに比較'
+  ok: '投稿途中だった内容（緑）を使う',
+  no: 'いいえ',
+  diffType: '比較モード',
+  sideBySide: '横に並べる',
+  inline: '行ごとに比較'
 });
