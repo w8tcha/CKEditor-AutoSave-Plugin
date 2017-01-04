@@ -10,9 +10,9 @@ CKEDITOR.plugins.setLang('autosave', 'nl', {
     loadedContent: 'Geladen inhoud',
     localStorageFull: 'Browser localStorage is full, clear your storage or Increase database size',
     autoSavedContent: 'Automatisch opgeslagen inhoud van: \'',
-	ok: 'Ja, laadt automatisch opgeslagen inhoud',
-	no: 'Nee',
-	diffType: 'Selecteer weergave:',
-	sideBySide: 'Zij aan zij weergave',
-	inline: 'In lijn weergave'
+  ok: 'Ja, laadt automatisch opgeslagen inhoud',
+  no: 'Nee',
+  diffType: 'Selecteer weergave:',
+  sideBySide: 'Zij aan zij weergave',
+  inline: 'In lijn weergave'
 });

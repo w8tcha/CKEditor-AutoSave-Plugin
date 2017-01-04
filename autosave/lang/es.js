@@ -10,9 +10,9 @@ CKEDITOR.plugins.setLang('autosave', 'es', {
     loadedContent: 'Contenido cargado',
     localStorageFull: 'Browser localStorage is full, clear your storage or Increase database size',
     autoSavedContent: 'Contenido auto-guardado de: \'',
-	ok: 'Si, carga el contenido auto-guardado',
-	no: 'No',
-	diffType: 'Escoge el tipo de visualización:',
-	sideBySide: 'Visualización uno al lado del otro',
-	inline: 'Visualización en línea'
+  ok: 'Si, carga el contenido auto-guardado',
+  no: 'No',
+  diffType: 'Escoge el tipo de visualización:',
+  sideBySide: 'Visualización uno al lado del otro',
+  inline: 'Visualización en línea'
 });

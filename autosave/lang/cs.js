@@ -10,9 +10,9 @@ CKEDITOR.plugins.setLang('autosave', 'cs', {
     loadedContent: 'Nahraný obsah',
     localStorageFull: 'Browser localStorage is full, clear your storage or Increase database size',
     autoSavedContent: 'Automaticky uložený obsah z: \'',
-	ok: 'Ano, zvolit automaticky uložený obsah',
-	no: 'Ne',
-	diffType: 'Zvolte si typ náhledu:',
-	sideBySide: 'Pohled HTML vedle HTML',
-	inline: 'Pohled Obsah/Obsah'
+  ok: 'Ano, zvolit automaticky uložený obsah',
+  no: 'Ne',
+  diffType: 'Zvolte si typ náhledu:',
+  sideBySide: 'Pohled HTML vedle HTML',
+  inline: 'Pohled Obsah/Obsah'
 });
