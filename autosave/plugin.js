@@ -12,7 +12,7 @@
     CKEDITOR.plugins.add("autosave", {
         lang: 'ca,cs,de,en,es,fr,ja,nl,pl,pt-br,ru,sk,sv,zh,zh-cn', // %REMOVE_LINE_CORE%
         requires: 'notification',
-        version: 0.16,
+        version: 0.17,
         init: function (editor) {
             // Default Config
             var defaultConfig = {
