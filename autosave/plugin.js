@@ -12,7 +12,7 @@
     CKEDITOR.plugins.add("autosave", {
         lang: 'ca,cs,de,en,es,fr,ja,nl,pl,pt-br,ru,sk,sv,zh,zh-cn', // %REMOVE_LINE_CORE%
         requires: 'notification',
-        version: 0.17,
+        version: "0.17.1",
         init: function (editor) {
             // Default Config
             var defaultConfig = {
@@ -21,7 +21,7 @@
                 saveDetectionSelectors: "a[href^='javascript:__doPostBack'][id*='Save'],a[id*='Cancel']",
                 saveOnDestroy: false,
                 NotOlderThen: 1440,
-                SaveKey: "autosaveKey",
+                SaveKey: 'autosave_' + window.location + "_" + editor.id,
                 diffType: "sideBySide"
             };
 
