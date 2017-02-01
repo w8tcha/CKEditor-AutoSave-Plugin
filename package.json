@@ -2,6 +2,7 @@
   "name": "CKEditor-AutoSave-Plugin",
   "author": "w8tcha",
   "description": "Auto Save Plugin for the CKEditor which automatically saves the content (via HTML5 LocalStorage) ",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/w8tcha/CKEditor-AutoSave-Plugin.git"
