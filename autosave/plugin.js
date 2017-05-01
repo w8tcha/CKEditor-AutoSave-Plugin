@@ -145,7 +145,7 @@
                 onOk: function() {
                     if (localStorage.getItem(autoSaveKey)) {
                         var jsonSavedContent = LoadData(autoSaveKey);
-                        editorInstance.loadSnapshot(jsonSavedContent.data);
+                        editorInstance.setData(jsonSavedContent.data);
 
                         RemoveStorage(autoSaveKey, editorInstance);
                     }
