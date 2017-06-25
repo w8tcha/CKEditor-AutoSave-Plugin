@@ -21,7 +21,7 @@
                 saveDetectionSelectors: "a[href^='javascript:__doPostBack'][id*='Save'],a[id*='Cancel']",
                 saveOnDestroy: false,
                 NotOlderThen: 1440,
-                SaveKey: 'autosave_' + window.location + "_" + editor.id,
+                SaveKey: 'autosave_' + window.location + "_" + $('#' + editor.name).attr('name'),
                 diffType: "sideBySide",
                 autoLoad: false
             };
