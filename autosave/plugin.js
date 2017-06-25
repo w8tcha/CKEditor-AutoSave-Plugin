@@ -12,7 +12,7 @@
     CKEDITOR.plugins.add("autosave", {
         lang: 'ca,cs,de,en,es,fr,it,ja,nl,pl,pt-br,ru,sk,sv,zh,zh-cn', // %REMOVE_LINE_CORE%
         requires: 'notification',
-        version: "0.17.1",
+        version: "0.18.0",
         init: function (editor) {
             // Default Config
             var defaultConfig = {
@@ -22,7 +22,8 @@
                 saveOnDestroy: false,
                 NotOlderThen: 1440,
                 SaveKey: 'autosave_' + window.location + "_" + editor.id,
-                diffType: "sideBySide"
+                diffType: "sideBySide",
+                autoLoad: false
             };
 
             // Get Config & Lang
@@ -72,7 +73,7 @@
         CKEDITOR.scriptLoader.load(CKEDITOR.getUrl(CKEDITOR.plugins.getPath('autosave') + 'js/extensions.min.js'), function() {
             GenerateAutoSaveDialog(editorInstance, config, autoSaveKey);
 
-            CheckForAutoSavedContent(editorInstance, autoSaveKey, notOlderThen);
+            CheckForAutoSavedContent(editorInstance, config, autoSaveKey, notOlderThen);
         });
 
         jQuery(saveDetectionSelectors).click(function() {
@@ -203,7 +204,7 @@
         });
     }
 
-    function CheckForAutoSavedContent(editorInstance, autoSaveKey, notOlderThen) {
+    function CheckForAutoSavedContent(editorInstance, config, autoSaveKey, notOlderThen) {
         // Checks If there is data available and load it
         if (localStorage.getItem(autoSaveKey)) {
             var jsonSavedContent = LoadData(autoSaveKey);
@@ -226,12 +227,24 @@
                 return;
             }
 
-            var confirmMessage = editorInstance.lang.autosave.loadSavedContent.replace("{0}", moment(autoSavedContentDate).locale(editorInstance.config.language).format(editorInstance.lang.autosave.dateFormat));
-            if (confirm(confirmMessage)) {
-                // Open DIFF Dialog
-                editorInstance.openDialog('autosaveDialog');
+            if (config.autoLoad) {
+                if (localStorage.getItem(autoSaveKey)) {
+                    var jsonSavedContent = LoadData(autoSaveKey);
+                    editorInstance.setData(jsonSavedContent.data);
+
+                    RemoveStorage(autoSaveKey, editorInstance);
+                }
             } else {
-                RemoveStorage(autoSaveKey, editorInstance);
+                var confirmMessage = editorInstance.lang.autosave.loadSavedContent.replace("{0}",
+                    moment(autoSavedContentDate).locale(editorInstance.config.language)
+                    .format(editorInstance.lang.autosave.dateFormat));
+
+                if (confirm(confirmMessage)) {
+                    // Open DIFF Dialog
+                    editorInstance.openDialog('autosaveDialog');
+                } else {
+                    RemoveStorage(autoSaveKey, editorInstance);
+                }
             }
         }
     }
