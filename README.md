@@ -64,3 +64,11 @@ config.autosave = {
 };
 ````
 
+#### Warning when using Pagespeed Module
+If you use the PageSpeed Module with Apache or Nginx, make sure you setup the module to disallow rewrite the plugins js file...
+
+Apache:
+`ModPagespeedDisallow "*/autosave/js/extensions.min.js*"`
+
+Nginx: 
+`pagespeed Disallow "*/autosave/js/extensions.min.js*"`
