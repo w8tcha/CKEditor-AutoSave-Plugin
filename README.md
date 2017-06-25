@@ -4,7 +4,7 @@ CKEditor-AutoSave-Plugin
 Auto Save Plugin for the CKEditor which automatically saves the content (via HTML5 LocalStorage) temporarly (for example when a login session times out). 
 And after the content is saved it can be restored when the editor is reloaded.
 
-####How the Plugin works
+#### How the Plugin works
 
 The Plugin saves the content every 25 seconds (can be defined in the Config - autosave_delay), but only when the content has changed.
 
@@ -13,11 +13,11 @@ And when the Editor Page is reloaded and auto saved content is found and its dif
 
 ![Screenshot](http://www.watchersnet.de/Portals/0/screenshots/dnn/AutoSaveDiffDialog.png)
 
-####License
+#### License
 
 Licensed under the terms of the MIT License.
 
-####Installation
+#### Installation
 
  1. Extract the contents of the file into the "plugins" folder of CKEditor.
  2. In the CKEditor configuration file (config.js) add the following code:
@@ -26,13 +26,13 @@ Licensed under the terms of the MIT License.
 config.extraPlugins = 'autosave';
 ````
 
-#####To Configure the Plugin the following options are available...
+##### To Configure the Plugin the following options are available...
 
 
 ````js
 config.autosave = { 
       // Auto save Key - The Default autosavekey can be overridden from the config ...
-      Savekey : "autosaveKey",
+      Savekey : 'autosave_' + window.location + "_" + $('#' + editor.name).attr('name'),
 
       // Ignore Content older then X
       //The Default Minutes (Default is 1440 which is one day) after the auto saved content is ignored can be overidden from the config ...
@@ -57,7 +57,10 @@ config.autosave = {
      delay : 10,
 
      // The Default Diff Type for the Compare Dialog, you can choose between "sideBySide" or "inline". Default is "sideBySide"
-     diffType : "sideBySide"     
+     diffType : "sideBySide",
+
+     // autoLoad when enabled it directly loads the saved content
+     autoLoad: false
 };
 ````
 
