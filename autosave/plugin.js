@@ -64,7 +64,7 @@
     });
 
     function loadPlugin(editorInstance, config) {
-        var autoSaveKey = config.SaveKey != null ? config.SaveKey : 'autosave_' + window.location + "_" + editorInstance.id;
+        var autoSaveKey = config.SaveKey != null ? config.SaveKey : 'autosave_' + window.location + "_" + $('#' + editorInstance.name).attr('name');
         var notOlderThen = config.NotOlderThen != null ? config.NotOlderThen : 1440;
         var saveOnDestroy = config.saveOnDestroy != null ? config.saveOnDestroy : false;
         var saveDetectionSelectors =
@@ -109,7 +109,7 @@
             var editor = editorInstance,
                 autoSaveKey = configAutosave.SaveKey != null
                     ? configAutosave.SaveKey
-                    : 'autosave_' + window.location + "_" + editor.id;
+                    : 'autosave_' + window.location + "_" + $('#' + editor.name).attr('name');
 
             SaveData(autoSaveKey, editor, configAutosave);
 
