@@ -81,20 +81,15 @@
     });
 
     function loadPlugin(editorInstance, config) {
-        var autoSaveKey = config.SaveKey != null ? config.SaveKey : 'autosave_' + window.location + "_" + $('#' + editorInstance.name).attr('name');
-        var notOlderThen = config.NotOlderThen != null ? config.NotOlderThen : 1440;
-        var saveOnDestroy = config.saveOnDestroy != null ? config.saveOnDestroy : false;
-        var saveDetectionSelectors =
-            config.saveDetectionSelectors != null ? config.saveDetectionSelectors : "a[href^='javascript:__doPostBack'][id*='Save'],a[id*='Cancel']";
 
         CKEDITOR.scriptLoader.load(CKEDITOR.getUrl(CKEDITOR.plugins.getPath('autosave') + 'js/extensions.min.js'), function() {
-            GenerateAutoSaveDialog(editorInstance, config, autoSaveKey);
+            GenerateAutoSaveDialog(editorInstance, config, config.SaveKey);
 
-            CheckForAutoSavedContent(editorInstance, config, autoSaveKey, notOlderThen);
+            CheckForAutoSavedContent(editorInstance, config, config.SaveKey, config.NotOlderThen);
         });
 
-        jQuery(saveDetectionSelectors).click(function() {
-            RemoveStorage(autoSaveKey, editorInstance);
+        jQuery(config.saveDetectionSelectors).click(function() {
+            RemoveStorage(config.SaveKey, editorInstance);
         });
 
         editorInstance.on('change', function() {
@@ -102,8 +97,8 @@
         });
 
         editorInstance.on('destroy', function() {
-            if (saveOnDestroy) {
-                SaveData(autoSaveKey, editorInstance, config);
+            if (config.saveOnDestroy) {
+                SaveData(config.SaveKey, editorInstance, config);
             }
         });
     }
