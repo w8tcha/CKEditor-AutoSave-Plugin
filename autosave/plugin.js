@@ -38,7 +38,7 @@
                 saveDetectionSelectors: "a[href^='javascript:__doPostBack'][id*='Save'],a[id*='Cancel']",
                 saveOnDestroy: false,
                 NotOlderThen: 1440,
-                SaveKey: _saveKeyPrefix + _saveKeyDelimiter + _saveKeyUrl + _saveKeyDelimiter + $('#' + editor.name).attr(_saveKeyAttribute),
+                SaveKey: _saveKeyPrefix + _saveKeyDelimiter + _saveKeyUrl + _saveKeyDelimiter + $(document.getElementById('#' + editor.name)).attr(_saveKeyAttribute),
                 diffType: "sideBySide",
                 autoLoad: false
             };
@@ -121,7 +121,7 @@
             var editor = editorInstance,
                 autoSaveKey = configAutosave.SaveKey != null
                     ? configAutosave.SaveKey
-                    : 'autosave_' + window.location + "_" + $('#' + editor.name).attr('name');
+                    : 'autosave_' + window.location + "_" + $(document.getElementyId('#' + editor.name)).attr('name');
 
             SaveData(autoSaveKey, editor, configAutosave);
 
