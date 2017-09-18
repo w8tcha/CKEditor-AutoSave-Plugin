@@ -121,7 +121,7 @@
             var editor = editorInstance,
                 autoSaveKey = configAutosave.SaveKey != null
                     ? configAutosave.SaveKey
-                    : 'autosave_' + window.location + "_" + $(document.getElementyId('#' + editor.name)).attr('name');
+                    : 'autosave_' + window.location + "_" + $(document.getElementById('#' + editor.name)).attr('name');
 
             SaveData(autoSaveKey, editor, configAutosave);
 
