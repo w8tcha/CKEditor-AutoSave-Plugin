@@ -12,7 +12,7 @@
     CKEDITOR.plugins.add("autosave", {
         lang: 'ca,cs,de,en,es,fr,it,ja,nl,pl,pt-br,ru,sk,sv,zh,zh-cn', // %REMOVE_LINE_CORE%
         requires: 'notification',
-        version: "0.18.0",
+        version: "0.18.1",
         init: function (editor) {
 
             // Look for autosave from config.js - this is a bit redundant but necessary
@@ -30,7 +30,7 @@
                     _saveKeyUrl = autosaveRemoveUrlParam(this, null, _saveKeyUrl);
                 });
             }
-            
+
             // Construct default configuration
             var defaultConfig = {
                 delay: 10,
@@ -38,7 +38,7 @@
                 saveDetectionSelectors: "a[href^='javascript:__doPostBack'][id*='Save'],a[id*='Cancel']",
                 saveOnDestroy: false,
                 NotOlderThen: 1440,
-                SaveKey: _saveKeyPrefix + _saveKeyDelimiter + _saveKeyUrl + _saveKeyDelimiter + $(document.getElementById('#' + editor.name)).attr(_saveKeyAttribute),
+                SaveKey: _saveKeyPrefix + _saveKeyDelimiter + _saveKeyUrl + _saveKeyDelimiter + document.getElementById(editor.name).getAttribute(_saveKeyAttribute),
                 diffType: "sideBySide",
                 autoLoad: false
             };
@@ -121,7 +121,7 @@
             var editor = editorInstance,
                 autoSaveKey = configAutosave.SaveKey != null
                     ? configAutosave.SaveKey
-                    : 'autosave_' + window.location + "_" + $(document.getElementById('#' + editor.name)).attr('name');
+                    : 'autosave_' + window.location + "_" + document.getElementById(editor.name).getAttribute('name');
 
             SaveData(autoSaveKey, editor, configAutosave);
 
