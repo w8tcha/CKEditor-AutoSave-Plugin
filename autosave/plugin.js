@@ -64,32 +64,23 @@
             }, editor, null, 100);
 
             editor.on('instanceReady', function(){
-                if (typeof (jQuery) === 'undefined') {
-                    CKEDITOR.scriptLoader.load('//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js', function() {
-                        jQuery.noConflict();
-
-                        loadPlugin(editor, config);
-                    });
-
-                } else {
-                    CKEDITOR.scriptLoader.load(CKEDITOR.getUrl(CKEDITOR.plugins.getPath('autosave') + 'js/extensions.min.js'), function() {
-                        loadPlugin(editor, config);
-                    });
-                }
+                CKEDITOR.scriptLoader.load(CKEDITOR.getUrl(CKEDITOR.plugins.getPath('autosave') + 'js/extensions.min.js'), function() {
+                    loadPlugin(editor, config);
+                });
             }, editor, null, 100);
         }
     });
 
     function loadPlugin(editorInstance, config) {
 
-        CKEDITOR.scriptLoader.load(CKEDITOR.getUrl(CKEDITOR.plugins.getPath('autosave') + 'js/extensions.min.js'), function() {
-            GenerateAutoSaveDialog(editorInstance, config, config.SaveKey);
+        GenerateAutoSaveDialog(editorInstance, config, config.SaveKey);
 
-            CheckForAutoSavedContent(editorInstance, config, config.SaveKey, config.NotOlderThen);
-        });
+        CheckForAutoSavedContent(editorInstance, config, config.SaveKey, config.NotOlderThen);
 
-        jQuery(config.saveDetectionSelectors).click(function() {
-            RemoveStorage(config.SaveKey, editorInstance);
+        CKEDITOR.tools.array.forEach(CKEDITOR.document.find(config.saveDetectionSelectors).toArray(), function(el) {
+            el.on('click', function() {
+                RemoveStorage(config.SaveKey, editorInstance);
+            });
         });
 
         editorInstance.on('change', function() {
