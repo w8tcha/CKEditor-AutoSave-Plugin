@@ -78,7 +78,7 @@
         CheckForAutoSavedContent(editorInstance, config, config.SaveKey, config.NotOlderThen);
 
         CKEDITOR.tools.array.forEach(CKEDITOR.document.find(config.saveDetectionSelectors).toArray(), function(el) {
-            el.on('click', function() {
+            el.$.addEventListener('click', function () {
                 RemoveStorage(config.SaveKey, editorInstance);
             });
         });
