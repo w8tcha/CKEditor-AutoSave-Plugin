@@ -24,11 +24,12 @@
                 _saveKeyUrl = _saveKeyIgnoreProto ? window.location.href.replace(/https?:\/\//, '') : window.location.href,
                 _saveKeyDelimiter = 'saveKeyDelimiter' in editor.config.autosave ? editor.config.autosave.saveKeyDelimiter : '_',
                 _saveKeyAttribute = 'saveKeyAttribute' in editor.config.autosave ? editor.config.autosave.saveKeyAttribute : 'name';
-            
+
             if ('saveKeyIgnoreParams' in editor.config.autosave) {
-                $(editor.config.autosave.saveKeyIgnoreParams).each(function() { 
-                    _saveKeyUrl = autosaveRemoveUrlParam(this, null, _saveKeyUrl);
-                });
+                CKEDITOR.tools.array.forEach(editor.config.autosave.saveKeyIgnoreParams,
+                    function() {
+                        _saveKeyUrl = autosaveRemoveUrlParam(this, null, _saveKeyUrl);
+                    });
             }
 
             // Construct default configuration
