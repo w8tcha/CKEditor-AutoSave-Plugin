@@ -1,5 +1,5 @@
 {
-  "name": "CKEditor-AutoSave-Plugin",
+  "name": "ckeditor-autoSave-plugin",
   "version": "0.18.2",
   "author": "w8tcha",
   "description": "Auto Save Plugin for the CKEditor which automatically saves the content (via HTML5 LocalStorage) ",
