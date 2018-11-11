@@ -12,7 +12,7 @@
     CKEDITOR.plugins.add("autosave", {
         lang: 'bg,ca,cs,de,en,es,fr,it,ja,nl,pl,pt-br,ru,sk,sv,zh,zh-cn', // %REMOVE_LINE_CORE%
         requires: 'notification',
-        version: "0.18.3",
+        version: "0.18.4",
         init: function (editor) {
 
             // Look for autosave from config.js - this is a bit redundant but necessary
@@ -46,10 +46,6 @@
 
             // Extend CKEDITOR config and lang  - config also available at loadPlugin()
             var config = CKEDITOR.tools.extend(defaultConfig, editor.config.autosave || {}, true);
-
-            if (editor.plugins.wordcount && config.messageType == "statusbar") {
-                config.messageType = "notification";
-            }
 
             CKEDITOR.document.appendStyleSheet(CKEDITOR.getUrl(CKEDITOR.plugins.getPath('autosave') + 'css/autosave.min.css'));
 
@@ -278,7 +274,7 @@
         } else {
             var messageType = config.messageType != null ? config.messageType : "notification";
 
-            if (editorInstance.plugins.wordcount && messageType == "statusbar") {
+            if (editorInstance.plugins.wordcount && messageType == "statusbar" && editorInstance.container.$.clientWidth < 150) {
                 messageType = "notification";
             }
 
