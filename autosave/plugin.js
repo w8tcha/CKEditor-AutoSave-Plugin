@@ -60,10 +60,15 @@
                 }
             }, editor, null, 100);
 
-            editor.on('instanceReady', function(){
-                CKEDITOR.scriptLoader.load(CKEDITOR.getUrl(CKEDITOR.plugins.getPath('autosave') + 'js/extensions.min.js'), function() {
+            editor.on('instanceReady', function () {
+                if (typeof requirejs === "function") {
+                    requirejs([CKEDITOR.getUrl(CKEDITOR.plugins.getPath('autosave') + 'js/extensions.min.js')]);
                     loadPlugin(editor, config);
-                });
+                } else {
+                    CKEDITOR.scriptLoader.load(CKEDITOR.getUrl(CKEDITOR.plugins.getPath('autosave') + 'js/extensions.min.js'), function () {
+                        loadPlugin(editor, config);
+                    });
+                }
             }, editor, null, 100);
         }
     });
