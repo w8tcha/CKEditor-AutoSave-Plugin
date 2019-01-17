@@ -62,8 +62,9 @@
 
             editor.on('instanceReady', function () {
                 if (typeof requirejs === "function") {
-                    requirejs([CKEDITOR.getUrl(CKEDITOR.plugins.getPath('autosave') + 'js/extensions.min.js')]);
-                    loadPlugin(editor, config);
+                    requirejs([CKEDITOR.getUrl(CKEDITOR.plugins.getPath('autosave') + 'js/extensions.min.js')], function() {
+                        loadPlugin(editor, config);
+                    });
                 } else {
                     CKEDITOR.scriptLoader.load(CKEDITOR.getUrl(CKEDITOR.plugins.getPath('autosave') + 'js/extensions.min.js'), function () {
                         loadPlugin(editor, config);
