@@ -152,9 +152,10 @@
                 onOk: function() {
                     if (localStorage.getItem(autoSaveKey)) {
                         var jsonSavedContent = LoadData(autoSaveKey);
-                        editorInstance.setData(jsonSavedContent.data);
-
+                        
                         RemoveStorage(autoSaveKey, editorInstance);
+
+                        editorInstance.setData(jsonSavedContent.data);
                     }
                 },
                 onCancel: function() {
