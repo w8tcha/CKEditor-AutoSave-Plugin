@@ -63,6 +63,7 @@ table.diff thead th.texttitle {
 table.diff tbody td {
   padding:0 .4em;
   vertical-align: top;
+    word-break: break-word;
 }
 table.diff .empty {
   background-color:#DDD;
