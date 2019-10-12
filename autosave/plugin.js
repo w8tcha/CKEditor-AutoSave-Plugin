@@ -49,6 +49,12 @@
 
             CKEDITOR.document.appendStyleSheet(CKEDITOR.getUrl(CKEDITOR.plugins.getPath('autosave') + 'css/autosave.min.css'));
 
+            editor.addCommand( 'removeAutoSaveStorage', {
+                exec: function( editor ) {
+                    RemoveStorage(config.SaveKey, editor);
+                }
+            });
+            
             editor.on('uiSpace', function(event) {
                 if (event.data.space == 'bottom' && config.messageType != null && config.messageType == "statusbar") {
 
