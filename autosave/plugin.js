@@ -95,12 +95,16 @@
 
         CKEDITOR.tools.array.forEach(CKEDITOR.document.find(config.saveDetectionSelectors).toArray(), function(el) {
             el.$.addEventListener("click", function () {
-                RemoveStorage(config.SaveKey, editorInstance);
+				RemoveStorage(config.SaveKey, editorInstance);
             });
         });
 
         editorInstance.on("change", function() {
-            startTimer(config, editorInstance);
+			startTimer(config, editorInstance);
+        });
+		
+		editorInstance.on("blur", function() {
+			startTimer(config, editorInstance);
         });
 
         editorInstance.on("destroy", function() {
@@ -278,8 +282,8 @@
         var compressedJSON = LZString.compressToUTF16(JSON.stringify({ data: editorInstance.getData(), saveTime: new Date() }));
 
         var quotaExceeded = false;
-
-        try {
+		
+		try {
             localStorage.setItem(autoSaveKey, compressedJSON);
         } catch (e) {
             quotaExceeded = isQuotaExceeded(e);
@@ -297,8 +301,8 @@
             if (editorInstance.plugins.wordcount && messageType == "statusbar" && editorInstance.container.$.clientWidth < 150) {
                 messageType = "notification";
             }
-
-            if (messageType == "statusbar") {
+			
+			if (messageType == "statusbar") {
                 var autoSaveMessage = document.getElementById(autoSaveMessageId(editorInstance));
 
                 if (autoSaveMessage) {
