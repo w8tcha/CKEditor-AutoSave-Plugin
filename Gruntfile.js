@@ -9,43 +9,59 @@ module.exports = function(grunt) {
 
   // CONFIGURATION
   grunt.initConfig({
-    pkg: grunt.file.readJSON('package.json'),
+      pkg: grunt.file.readJSON("package.json"),
 
-    // Minimize JS
-    min: {
-      options: {
-        report: false
+      // Minimize JS
+      uglify: {
+          difflib: {
+              options: {
+                  sourceMap: false,
+                  output: { beautify: true },
+                  mangle: false,
+                  compress: false
+              },
+              src: [
+                  "autosave/js/difflib.js",
+                  "autosave/js/diffview.js",
+                  "autosave/js/jsdiff.js",
+                  "node_modules/moment/min/moment-with-locales.js",
+                  "node_modules/lz-string/libs/lz-string.js"
+              ],
+              dest: "autosave/js/extensions.js"
+          },
+          minify: {
+              files: {
+                  "autosave/js/extensions.min.js": "autosave/js/extensions.js"
+
+              }
+          }
       },
-      difflib: {
-        src: [
-          'autosave/js/difflib.js',
-          'autosave/js/diffview.js',
-          'autosave/js/jsdiff.js',
-          'autosave/js/moment.js',
-          'autosave/js/lz-string.js'
-          ],
-        dest: 'autosave/js/extensions.min.js',
-      }
-    },
 
-    // CSS Minify
-    cssmin: {
-      combine: {
-        files: {
-          'autosave/css/autosave.min.css': ['autosave/css/autosave.css']
-        }
+      // CSS Minify
+      cssmin: {
+          combine: {
+              files: {
+                  "autosave/css/autosave.min.css": "autosave/css/autosave.css",
+              }
+          }
       }
-    },
-
   });
 
   // PLUGINS
-  grunt.loadNpmTasks('grunt-yui-compressor');
+  grunt.loadNpmTasks("grunt-contrib-watch");
+  grunt.loadNpmTasks("grunt-contrib-cssmin");
+  grunt.loadNpmTasks("grunt-contrib-uglify");
 
 
-  grunt.registerTask('default', [
-    'min',
-    'cssmin'
+  grunt.registerTask("watch",
+      [
+          "uglify",
+          "cssmin"
+      ]);
+
+  grunt.registerTask("default", [
+      "uglify",
+      "cssmin"
     ]);
 
 };

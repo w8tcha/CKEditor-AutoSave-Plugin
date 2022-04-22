@@ -15,9 +15,13 @@
     "html5"
   ],
   "devDependencies": {
-    "grunt": "~1.5.1",
-    "grunt-contrib-imagemin": "~4.0.0",
-    "grunt-contrib-watch": "~1.1.0",
-    "grunt-yui-compressor": "~0.4.0"
+    "grunt": "~1.5.2",
+    "grunt-contrib-cssmin": "*",
+    "grunt-contrib-uglify": "*",
+    "grunt-contrib-watch": "~1.1.0"
+  },
+  "dependencies": {
+    "lz-string": "^1.4.4",
+    "moment": "^2.29.3"
   }
 }
