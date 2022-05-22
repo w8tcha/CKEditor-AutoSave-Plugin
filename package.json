@@ -15,7 +15,7 @@
     "html5"
   ],
   "devDependencies": {
-    "grunt": "~1.5.2",
+    "grunt": "~1.5.3",
     "grunt-contrib-cssmin": "*",
     "grunt-contrib-uglify": "*",
     "grunt-contrib-watch": "~1.1.0"
