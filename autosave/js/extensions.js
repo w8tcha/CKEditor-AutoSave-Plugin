@@ -2180,7 +2180,7 @@ function diff(o, n) {
         return year;
     }
     function preprocessRFC2822(s) {
-        return s.replace(/\([^)]*\)|[\n\t]/g, " ").replace(/(\s\s+)/g, " ").replace(/^\s\s*/, "").replace(/\s\s*$/, "");
+        return s.replace(/\([^()]*\)|[\n\t]/g, " ").replace(/(\s\s+)/g, " ").replace(/^\s\s*/, "").replace(/\s\s*$/, "");
     }
     function checkWeekday(weekdayStr, parsedInput, config) {
         if (weekdayStr) {
@@ -4204,7 +4204,7 @@ function diff(o, n) {
     addParseToken("x", function(input, array, config) {
         config._d = new Date(toInt(input));
     });
-    hooks.version = "2.29.3";
+    hooks.version = "2.29.4";
     setHookCallback(createLocal);
     hooks.fn = proto;
     hooks.min = min;
@@ -15138,4 +15138,8 @@ if (typeof define === "function" && define.amd) {
     });
 } else if (typeof module !== "undefined" && module != null) {
     module.exports = LZString;
+} else if (typeof angular !== "undefined" && angular != null) {
+    angular.module("LZString", []).factory("LZString", function() {
+        return LZString;
+    });
 }
