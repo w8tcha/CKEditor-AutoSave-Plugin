@@ -16,7 +16,7 @@
   ],
   "devDependencies": {
     "grunt": "^1.6.1",
-    "grunt-contrib-cssmin": "*",
+    "grunt-contrib-cssmin": "^5.0.0",
     "grunt-contrib-uglify": "^5.2.2",
     "grunt-contrib-watch": "~1.1.0",
     "grunt-dev-update": "^2.3.0"
