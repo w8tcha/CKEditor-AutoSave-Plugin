@@ -32,7 +32,7 @@ config.extraPlugins = 'autosave';
 ````js
 config.autosave = { 
       // Auto save Key - The Default autosavekey can be overridden from the config ...
-      Savekey : 'autosave_' + window.location + "_" + $('#' + editor.name).attr('name'),
+      SaveKey : 'autosave_' + window.location + "_" + $('#' + editor.name).attr('name'),
 
       // Ignore Content older then X
       //The Default Minutes (Default is 1440 which is one day) after the auto saved content is ignored can be overidden from the config ...
