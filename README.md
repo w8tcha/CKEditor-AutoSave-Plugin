@@ -1,7 +1,9 @@
 CKEditor-AutoSave-Plugin
 ========================
 
-Auto Save Plugin for the CKEditor which automatically saves the content (via HTML5 LocalStorage) temporarly (for example when a login session times out). 
+![license](https://img.shields.io/github/license/w8tcha/CKEditor-AutoSave-Plugin)
+
+Auto Save Plugin for the CKEditor v4 which automatically saves the content (via HTML5 LocalStorage) temporarly (for example when a login session times out). 
 And after the content is saved it can be restored when the editor is reloaded.
 
 #### How the Plugin works
