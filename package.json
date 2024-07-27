@@ -15,7 +15,7 @@
     "html5"
   ],
   "devDependencies": {
-    "@w8tcha/grunt-dev-update": "^2.3.1",
+    "@w8tcha/grunt-dev-update": "^2.3.4",
     "grunt": "^1.6.1",
     "grunt-contrib-cssmin": "^5.0.0",
     "grunt-contrib-uglify": "^5.2.2",
