@@ -14,11 +14,11 @@ difflib = {
         return str.replace(/^[\n\r]*|[\n\r]*$/g, "");
     },
     stringAsLines: function(str) {
-        var lfpos = str.indexOf("\n");
-        var crpos = str.indexOf("\r");
-        var linebreak = lfpos > -1 && crpos > -1 || crpos < 0 ? "\n" : "\r";
-        var lines = str.split(linebreak);
-        for (var i = 0; i < lines.length; i++) {
+        const lfpos = str.indexOf("\n");
+        const crpos = str.indexOf("\r");
+        const linebreak = lfpos > -1 && crpos > -1 || crpos < 0 ? "\n" : "\r";
+        const lines = str.split(linebreak);
+        for (let i = 0; i < lines.length; i++) {
             lines[i] = difflib.stripLinebreaks(lines[i]);
         }
         return lines;
@@ -39,8 +39,8 @@ difflib = {
         return value;
     },
     __ntuplecomp: function(a, b) {
-        var mlen = Math.max(a.length, b.length);
-        for (var i = 0; i < mlen; i++) {
+        const mlen = Math.max(a.length, b.length);
+        for (let i = 0; i < mlen; i++) {
             if (a[i] < b[i]) return -1;
             if (a[i] > b[i]) return 1;
         }
@@ -74,14 +74,14 @@ difflib = {
             this.__chain_b();
         };
         this.__chain_b = function() {
-            var b = this.b;
-            var n = b.length;
-            var b2j = this.b2j = {};
-            var populardict = {};
-            for (var i = 0; i < b.length; i++) {
+            const b = this.b;
+            const n = b.length;
+            const b2j = this.b2j = {};
+            const populardict = {};
+            for (let i = 0; i < b.length; i++) {
                 var elt = b[i];
                 if (elt in b2j) {
-                    var indices = b2j[elt];
+                    const indices = b2j[elt];
                     if (n >= 200 && indices.length * 100 > n) {
                         populardict[elt] = 1;
                         delete b2j[elt];
@@ -93,8 +93,8 @@ difflib = {
                 }
             }
             for (var elt in populardict) delete b2j[elt];
-            var isjunk = this.isjunk;
-            var junkdict = {};
+            const isjunk = this.isjunk;
+            const junkdict = {};
             if (isjunk) {
                 for (var elt in populardict) {
                     if (isjunk(elt)) {
@@ -159,10 +159,10 @@ difflib = {
         };
         this.get_matching_blocks = function() {
             if (this.matching_blocks != null) return this.matching_blocks;
-            var la = this.a.length;
-            var lb = this.b.length;
-            var queue = [ [ 0, la, 0, lb ] ];
-            var matching_blocks = [];
+            const la = this.a.length;
+            const lb = this.b.length;
+            const queue = [ [ 0, la, 0, lb ] ];
+            const matching_blocks = [];
             var alo, ahi, blo, bhi, qi, i, j, k, x;
             while (queue.length) {
                 qi = queue.pop();
@@ -182,8 +182,8 @@ difflib = {
             }
             matching_blocks.sort(difflib.__ntuplecomp);
             var i1 = j1 = k1 = block = 0;
-            var non_adjacent = [];
-            for (var idx in matching_blocks) {
+            const non_adjacent = [];
+            for (let idx in matching_blocks) {
                 block = matching_blocks[idx];
                 i2 = block[0];
                 j2 = block[1];
@@ -206,11 +206,11 @@ difflib = {
             if (this.opcodes != null) return this.opcodes;
             var i = 0;
             var j = 0;
-            var answer = [];
+            const answer = [];
             this.opcodes = answer;
             var block, ai, bj, size, tag;
-            var blocks = this.get_matching_blocks();
-            for (var idx in blocks) {
+            const blocks = this.get_matching_blocks();
+            for (let idx in blocks) {
                 block = blocks[idx];
                 ai = block[0];
                 bj = block[1];
@@ -288,8 +288,8 @@ difflib = {
                 }
             }
             fullbcount = this.fullbcount;
-            var avail = {};
-            var availhas = difflib.__isindict(avail);
+            const avail = {};
+            const availhas = difflib.__isindict(avail);
             var matches = numb = 0;
             for (var i = 0; i < this.a.length; i++) {
                 elt = this.a[i];
@@ -304,8 +304,8 @@ difflib = {
             return difflib.__calculate_ratio(matches, this.a.length + this.b.length);
         };
         this.real_quick_ratio = function() {
-            var la = this.a.length;
-            var lb = this.b.length;
+            const la = this.a.length;
+            const lb = this.b.length;
             return _calculate_ratio(Math.min(la, lb), la + lb);
         };
         this.isjunk = isjunk ? isjunk : difflib.defaultJunkFunction;
@@ -327,17 +327,17 @@ diffview = {
         if (newTextLines == null) throw "Cannot build diff view; newTextLines is not defined.";
         if (!opcodes) throw "Canno build diff view; opcodes is not defined.";
         function celt(name, clazz) {
-            var e = document.createElement(name);
+            const e = document.createElement(name);
             e.className = clazz;
             return e;
         }
         function telt(name, text) {
-            var e = document.createElement(name);
+            const e = document.createElement(name);
             e.appendChild(document.createTextNode(text));
             return e;
         }
         function ctelt(name, clazz, text) {
-            var e = document.createElement(name);
+            const e = document.createElement(name);
             e.className = clazz;
             e.innerHTML = text;
             return e;
@@ -468,21 +468,21 @@ function diffString(o, n) {
     }
     if (out.n.length == 0) {
         for (var i = 0; i < out.o.length; i++) {
-            str += "<del>" + escape_jsdiff(out.o[i]) + oSpace[i] + "</del>";
+            str += `<del>${escape_jsdiff(out.o[i])}${oSpace[i]}</del>`;
         }
     } else {
         if (out.n[0].text == null) {
             for (n = 0; n < out.o.length && out.o[n].text == null; n++) {
-                str += "<del>" + escape_jsdiff(out.o[n]) + oSpace[n] + "</del>";
+                str += `<del>${escape_jsdiff(out.o[n])}${oSpace[n]}</del>`;
             }
         }
         for (var i = 0; i < out.n.length; i++) {
             if (out.n[i].text == null) {
-                str += "<ins>" + escape_jsdiff(out.n[i]) + nSpace[i] + "</ins>";
+                str += `<ins>${escape_jsdiff(out.n[i])}${nSpace[i]}</ins>`;
             } else {
                 var pre = "";
                 for (n = out.n[i].row + 1; n < out.o.length && out.o[n].text == null; n++) {
-                    pre += "<del>" + escape_jsdiff(out.o[n]) + oSpace[n] + "</del>";
+                    pre += `<del>${escape_jsdiff(out.o[n])}${oSpace[n]}</del>`;
                 }
                 str += " " + out.n[i].text + nSpace[i] + pre;
             }
@@ -492,13 +492,13 @@ function diffString(o, n) {
 }
 
 function randomColor() {
-    return "rgb(" + Math.random() * 100 + "%, " + Math.random() * 100 + "%, " + Math.random() * 100 + "%)";
+    return `rgb(${Math.random() * 100}%, ${Math.random() * 100}%, ${Math.random() * 100}%)`;
 }
 
 function diffString2(o, n) {
     o = o.replace(/\s+$/, "");
     n = n.replace(/\s+$/, "");
-    var out = diff(o == "" ? [] : o.split(/\s+/), n == "" ? [] : n.split(/\s+/));
+    const out = diff(o == "" ? [] : o.split(/\s+/), n == "" ? [] : n.split(/\s+/));
     var oSpace = o.match(/\s+/g);
     if (oSpace == null) {
         oSpace = [ "\n" ];
@@ -512,13 +512,13 @@ function diffString2(o, n) {
         nSpace.push("\n");
     }
     var os = "";
-    var colors = new Array();
+    const colors = new Array();
     for (var i = 0; i < out.o.length; i++) {
         colors[i] = randomColor();
         if (out.o[i].text != null) {
             os += escape_jsdiff(out.o[i].text) + oSpace[i];
         } else {
-            os += "<del>" + escape_jsdiff(out.o[i]) + oSpace[i] + "</del>";
+            os += `<del>${escape_jsdiff(out.o[i])}${oSpace[i]}</del>`;
         }
     }
     var ns = "";
@@ -526,7 +526,7 @@ function diffString2(o, n) {
         if (out.n[i].text != null) {
             ns += escape_jsdiff(out.n[i].text) + nSpace[i];
         } else {
-            ns += "<ins>" + escape_jsdiff(out.n[i]) + nSpace[i] + "</ins>";
+            ns += `<ins>${escape_jsdiff(out.n[i])}${nSpace[i]}</ins>`;
         }
     }
     return {
