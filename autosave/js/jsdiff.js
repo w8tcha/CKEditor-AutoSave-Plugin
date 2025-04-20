@@ -13,10 +13,10 @@
 
 function escape_jsdiff(s) {
     var n = s;
-    n = n.replace(/&/g, "&amp;");
-    n = n.replace(/</g, "&lt;");
-    n = n.replace(/>/g, "&gt;");
-    n = n.replace(/"/g, "&quot;");
+    n = n.replace(/&/g, '&amp;');
+    n = n.replace(/</g, '&lt;');
+    n = n.replace(/>/g, '&gt;');
+    n = n.replace(/"/g, '&quot;');
 
     return n;
 }
@@ -25,43 +25,43 @@ function diffString( o, n ) {
   o = o.replace(/\s+$/, '');
   n = n.replace(/\s+$/, '');
 
-  var out = diff(o == "" ? [] : o.split(/\s+/), n == "" ? [] : n.split(/\s+/) );
-  var str = "";
+  var out = diff(o == '' ? [] : o.split(/\s+/), n == '' ? [] : n.split(/\s+/) );
+  var str = '';
 
   var oSpace = o.match(/\s+/g);
   if (oSpace == null) {
-    oSpace = ["\n"];
+    oSpace = ['\n'];
   } else {
-    oSpace.push("\n");
+    oSpace.push('\n');
   }
   var nSpace = n.match(/\s+/g);
   if (nSpace == null) {
-    nSpace = ["\n"];
+    nSpace = ['\n'];
   } else {
-    nSpace.push("\n");
+    nSpace.push('\n');
   }
 
   if (out.n.length == 0) {
       for (var i = 0; i < out.o.length; i++) {
-        str += '<del>' + escape_jsdiff(out.o[i]) + oSpace[i] + "</del>";
+        str += `<del>${escape_jsdiff(out.o[i])}${oSpace[i]}</del>`;
       }
   } else {
     if (out.n[0].text == null) {
       for (n = 0; n < out.o.length && out.o[n].text == null; n++) {
-        str += '<del>' + escape_jsdiff(out.o[n]) + oSpace[n] + "</del>";
+        str += `<del>${escape_jsdiff(out.o[n])}${oSpace[n]}</del>`;
       }
     }
 
     for ( var i = 0; i < out.n.length; i++ ) {
       if (out.n[i].text == null) {
-        str += '<ins>' + escape_jsdiff(out.n[i]) + nSpace[i] + "</ins>";
+        str += `<ins>${escape_jsdiff(out.n[i])}${nSpace[i]}</ins>`;
       } else {
-        var pre = "";
+        var pre = '';
 
         for (n = out.n[i].row + 1; n < out.o.length && out.o[n].text == null; n++ ) {
-          pre += '<del>' + escape_jsdiff(out.o[n]) + oSpace[n] + "</del>";
+          pre += `<del>${escape_jsdiff(out.o[n])}${oSpace[n]}</del>`;
         }
-        str += " " + out.n[i].text + nSpace[i] + pre;
+        str += ' ' + out.n[i].text + nSpace[i] + pre;
       }
     }
   }
@@ -70,47 +70,45 @@ function diffString( o, n ) {
 }
 
 function randomColor() {
-    return "rgb(" + (Math.random() * 100) + "%, " + 
-                    (Math.random() * 100) + "%, " + 
-                    (Math.random() * 100) + "%)";
+    return `rgb(${Math.random() * 100}%, ${Math.random() * 100}%, ${Math.random() * 100}%)`;
 }
 function diffString2( o, n ) {
   o = o.replace(/\s+$/, '');
   n = n.replace(/\s+$/, '');
 
-  var out = diff(o == "" ? [] : o.split(/\s+/), n == "" ? [] : n.split(/\s+/) );
+  const out = diff(o == '' ? [] : o.split(/\s+/), n == '' ? [] : n.split(/\s+/) );
 
   var oSpace = o.match(/\s+/g);
   if (oSpace == null) {
-    oSpace = ["\n"];
+    oSpace = ['\n'];
   } else {
-    oSpace.push("\n");
+    oSpace.push('\n');
   }
   var nSpace = n.match(/\s+/g);
   if (nSpace == null) {
-    nSpace = ["\n"];
+    nSpace = ['\n'];
   } else {
-    nSpace.push("\n");
+    nSpace.push('\n');
   }
 
-  var os = "";
-  var colors = new Array();
+  var os = '';
+  const colors = new Array();
   for (var i = 0; i < out.o.length; i++) {
       colors[i] = randomColor();
 
       if (out.o[i].text != null) {
           os += escape_jsdiff(out.o[i].text) + oSpace[i];
       } else {
-          os += "<del>" + escape_jsdiff(out.o[i]) + oSpace[i] + "</del>";
+          os += `<del>${escape_jsdiff(out.o[i])}${oSpace[i]}</del>`;
       }
   }
 
-  var ns = "";
+  var ns = '';
   for (var i = 0; i < out.n.length; i++) {
       if (out.n[i].text != null) {
           ns += escape_jsdiff(out.n[i].text) + nSpace[i];
       } else {
-          ns += "<ins>" + escape_jsdiff(out.n[i]) + nSpace[i] + "</ins>";
+          ns += `<ins>${escape_jsdiff(out.n[i])}${nSpace[i]}</ins>`;
       }
   }
 
@@ -134,7 +132,7 @@ function diff( o, n ) {
   }
   
   for ( var i in ns ) {
-    if ( ns[i].rows.length == 1 && typeof(os[i]) != "undefined" && os[i].rows.length == 1 ) {
+    if ( ns[i].rows.length == 1 && typeof(os[i]) != 'undefined' && os[i].rows.length == 1 ) {
       n[ ns[i].rows[0] ] = { text: n[ ns[i].rows[0] ], row: os[i].rows[0] };
       o[ os[i].rows[0] ] = { text: o[ os[i].rows[0] ], row: ns[i].rows[0] };
     }

@@ -13,7 +13,7 @@
         {
             lang: 'bg,ca,cs,de,en,es,eu,fr,it,ja,nl,pl,pt-br,ru,sk,sv,uk,zh,zh-cn', // %REMOVE_LINE_CORE%
             requires: 'notification',
-            version: '0.18.6',
+            version: '0.18.7',
             init: function(editor) {
 
                 // Construct default configuration
@@ -46,7 +46,7 @@
                     if (config.SaveKeyIgnoreParams.length) {
                         CKEDITOR.tools.array.forEach(config.SaveKeyIgnoreParams,
                             function() {
-                                saveKeyUrl = RemoveUrlParam(this, null, saveKeyUrl);
+                                saveKeyUrl = removeUrlParam(this, null, saveKeyUrl);
                             });
                     }
 
@@ -64,7 +64,7 @@
                 editor.addCommand('removeAutoSaveStorage',
                     {
                         exec: function(editor) {
-                            RemoveStorage(config.SaveKey, editor);
+                            removeStorage(config.SaveKey, editor);
                         }
                     });
 
@@ -107,13 +107,13 @@
 
         GenerateAutoSaveDialog(editorInstance, config, config.SaveKey);
 
-        CheckForAutoSavedContent(editorInstance, config, config.SaveKey, config.NotOlderThen);
+        checkForAutoSavedContent(editorInstance, config, config.SaveKey, config.NotOlderThen);
 
         CKEDITOR.tools.array.forEach(CKEDITOR.document.find(config.saveDetectionSelectors).toArray(),
             function(el) {
                 el.$.addEventListener('click',
                     function() {
-                        RemoveStorage(config.SaveKey, editorInstance);
+                        removeStorage(config.SaveKey, editorInstance);
                     });
             });
 
@@ -130,7 +130,7 @@
         editorInstance.on('destroy',
             function() {
                 if (config.saveOnDestroy) {
-                    SaveData(config.SaveKey, editorInstance, config);
+                    saveData(config.SaveKey, editorInstance, config);
                 }
             });
     }
@@ -156,7 +156,7 @@
                 ? configAutosave.SaveKey
                 : `autosave_${window.location}_${document.getElementById(editor.name).getAttribute('name')}`;
 
-            SaveData(autoSaveKey, editor, configAutosave);
+            saveData(autoSaveKey, editor, configAutosave);
 
             clearTimeout(editorInstance.config.autosave_timeOutId);
 
@@ -187,19 +187,19 @@
                     height: 300,
                     width: 800,
                     onShow: function() {
-                        RenderDiff(this, editorInstance, autoSaveKey);
+                        renderDiff(this, editorInstance, autoSaveKey);
                     },
                     onOk: function() {
                         if (localStorage.getItem(autoSaveKey)) {
-                            const jsonSavedContent = LoadData(autoSaveKey);
+                            const jsonSavedContent = loadData(autoSaveKey);
 
-                            RemoveStorage(autoSaveKey, editorInstance);
+                            removeStorage(autoSaveKey, editorInstance);
 
                             editorInstance.setData(jsonSavedContent.data);
                         }
                     },
                     onCancel: function() {
-                        RemoveStorage(autoSaveKey, editorInstance);
+                        removeStorage(autoSaveKey, editorInstance);
                     },
                     contents: [
                         {
@@ -216,7 +216,7 @@
                                     ],
                                     'default': config.diffType,
                                     onClick: function() {
-                                        RenderDiff(this._.dialog, editorInstance, autoSaveKey);
+                                        renderDiff(this._.dialog, editorInstance, autoSaveKey);
                                     }
                                 }, {
                                     type: 'html',
@@ -254,10 +254,10 @@
             });
     }
 
-    function CheckForAutoSavedContent(editorInstance, config, autoSaveKey, notOlderThen) {
+    function checkForAutoSavedContent(editorInstance, config, autoSaveKey, notOlderThen) {
         // Checks If there is data available and load it
         if (localStorage.getItem(autoSaveKey)) {
-            var jsonSavedContent = LoadData(autoSaveKey);
+            let jsonSavedContent = loadData(autoSaveKey);
 
             if (!isJson(jsonSavedContent)) {
 	            return;
@@ -276,14 +276,14 @@
 
             // Ignore if auto saved content is older than x minutes
             if (moment(new Date()).diff(new Date(autoSavedContentDate), 'minutes') > notOlderThen) {
-                RemoveStorage(autoSaveKey, editorInstance);
+                removeStorage(autoSaveKey, editorInstance);
 
                 return;
             }
 
             if (config.autoLoad) {
                 if (localStorage.getItem(autoSaveKey)) {
-                    var jsonSavedContent = LoadData(autoSaveKey);
+                    jsonSavedContent = loadData(autoSaveKey);
 
                     if (!isJson(jsonSavedContent)) {
 	                    return;
@@ -292,7 +292,7 @@
                     editorInstance.setData(jsonSavedContent.data);
 
                     if (config.removeStorageAfterAutoLoad) {
-                        RemoveStorage(autoSaveKey, editorInstance);
+                        removeStorage(autoSaveKey, editorInstance);
                     }
                 }
             } else {
@@ -304,24 +304,24 @@
                     // Open DIFF Dialog
                     editorInstance.openDialog('autosaveDialog');
                 } else {
-                    RemoveStorage(autoSaveKey, editorInstance);
+                    removeStorage(autoSaveKey, editorInstance);
                 }
             }
         }
     }
 
-    function LoadData(autoSaveKey) {
-        const compressedJSON = LZString.decompressFromUTF16(localStorage.getItem(autoSaveKey));
-        return JSON.parse(compressedJSON);
+    function loadData(autoSaveKey) {
+        const compressedJson = LZString.decompressFromUTF16(localStorage.getItem(autoSaveKey));
+        return JSON.parse(compressedJson);
     }
 
-    function SaveData(autoSaveKey, editorInstance, config) {
-        const compressedJSON = LZString.compressToUTF16(JSON.stringify({ data: editorInstance.getData(), saveTime: new Date() }));
+    function saveData(autoSaveKey, editorInstance, config) {
+        const compressedJson = LZString.compressToUTF16(JSON.stringify({ data: editorInstance.getData(), saveTime: new Date() }));
 
         var quotaExceeded = false;
 
         try {
-            localStorage.setItem(autoSaveKey, compressedJSON);
+            localStorage.setItem(autoSaveKey, compressedJson);
         } catch (e) {
             quotaExceeded = isQuotaExceeded(e);
             if (quotaExceeded) {
@@ -361,7 +361,7 @@
         }
     }
 
-    function RemoveStorage(autoSaveKey, editor) {
+    function removeStorage(autoSaveKey, editor) {
         if (editor.config.autosave_timeOutId) {
             clearTimeout(editor.config.autosave_timeOutId);
         }
@@ -369,17 +369,17 @@
         localStorage.removeItem(autoSaveKey);
     }
 
-    function RenderDiff(dialog, editorInstance, autoSaveKey) {
-        const jsonSavedContent = LoadData(autoSaveKey);
+    function renderDiff(dialog, editorInstance, autoSaveKey) {
+        const jsonSavedContent = loadData(autoSaveKey);
 
         const base = difflib.stringAsLines(editorInstance.getData());
-        const newtxt = difflib.stringAsLines(jsonSavedContent.data);
-        const sm = new difflib.SequenceMatcher(base, newtxt);
+        const newText = difflib.stringAsLines(jsonSavedContent.data);
+        const sm = new difflib.SequenceMatcher(base, newText);
         const opcodes = sm.get_opcodes();
 
         dialog.getContentElement('general', 'diffContent').getElement().setHtml(`<div class="diffContent">${diffview.buildView({
             baseTextLines: base,
-            newTextLines: newtxt,
+            newTextLines: newText,
             opcodes: opcodes,
             baseTextName: editorInstance.lang.autosave.loadedContent,
             newTextName: editorInstance.lang.autosave.autoSavedContent +
@@ -417,7 +417,7 @@
     // Querystring mitigator - Quick and dirty paste.
     // I don't know who original author is for creds.
     // https://stackoverflow.com/a/11654436/2418655
-    function RemoveUrlParam(key, value, url) {
+    function removeUrlParam(key, value, url) {
         if (!url) url = window.location.href;
         const re = new RegExp(`([?&])${key}=.*?(&|#|$)(.*)`, 'gi');
         var hash;

@@ -50,49 +50,49 @@ diffview = {
 		var baseTextLines = params.baseTextLines;
 		var newTextLines = params.newTextLines;
 		var opcodes = params.opcodes;
-		var baseTextName = params.baseTextName ? params.baseTextName : "Base Text";
-		var newTextName = params.newTextName ? params.newTextName : "New Text";
+		var baseTextName = params.baseTextName ? params.baseTextName : 'Base Text';
+		var newTextName = params.newTextName ? params.newTextName : 'New Text';
 		var contextSize = params.contextSize;
 		var inline = (params.viewType == 0 || params.viewType == 1) ? params.viewType : 0;
 
 		if (baseTextLines == null)
-			throw "Cannot build diff view; baseTextLines is not defined.";
+			throw 'Cannot build diff view; baseTextLines is not defined.';
 		if (newTextLines == null)
-			throw "Cannot build diff view; newTextLines is not defined.";
+			throw 'Cannot build diff view; newTextLines is not defined.';
 		if (!opcodes)
-			throw "Canno build diff view; opcodes is not defined.";
+			throw 'Canno build diff view; opcodes is not defined.';
 
 		function celt (name, clazz) {
-			var e = document.createElement(name);
+			const e = document.createElement(name);
 			e.className = clazz;
 			return e;
 		}
 
 		function telt (name, text) {
-			var e = document.createElement(name);
+			const e = document.createElement(name);
 			e.appendChild(document.createTextNode(text));
 			return e;
 		}
 
 		function ctelt (name, clazz, text) {
-			var e = document.createElement(name);
+			const e = document.createElement(name);
 			e.className = clazz;
 			e.innerHTML = text;
 			return e;
 		}
 
-		var tdata = document.createElement("thead");
-		var node = document.createElement("tr");
+		var tdata = document.createElement('thead');
+		var node = document.createElement('tr');
 		tdata.appendChild(node);
 		if (inline) {
-			node.appendChild(document.createElement("th"));
-			node.appendChild(document.createElement("th"));
-			node.appendChild(ctelt("th", "texttitle", baseTextName + " vs. " + newTextName));
+			node.appendChild(document.createElement('th'));
+			node.appendChild(document.createElement('th'));
+			node.appendChild(ctelt('th', 'texttitle', baseTextName + ' vs. ' + newTextName));
 		} else {
-			node.appendChild(document.createElement("th"));
-			node.appendChild(ctelt("th", "texttitle", baseTextName));
-			node.appendChild(document.createElement("th"));
-			node.appendChild(ctelt("th", "texttitle", newTextName));
+			node.appendChild(document.createElement('th'));
+			node.appendChild(ctelt('th', 'texttitle', baseTextName));
+			node.appendChild(document.createElement('th'));
+			node.appendChild(ctelt('th', 'texttitle', newTextName));
 		}
 		tdata = [tdata];
 
@@ -110,20 +110,20 @@ diffview = {
 		 */
 		function addCells (row, tidx, tend, textLines, change) {
 			if (tidx < tend) {
-				row.appendChild(telt("th", (tidx + 1).toString()));
-				row.appendChild(ctelt("td", change, textLines[tidx].replace(/\t/g, "\u00a0\u00a0\u00a0\u00a0")));
+				row.appendChild(telt('th', (tidx + 1).toString()));
+				row.appendChild(ctelt('td', change, textLines[tidx].replace(/\t/g, '\u00a0\u00a0\u00a0\u00a0')));
 				return tidx + 1;
 			} else {
-				row.appendChild(document.createElement("th"));
-				row.appendChild(celt("td", "empty"));
+				row.appendChild(document.createElement('th'));
+				row.appendChild(celt('td', 'empty'));
 				return tidx;
 			}
 		}
 
 		function addCellsInline (row, tidx, tidx2, textLines, change) {
-			row.appendChild(telt("th", tidx == null ? "" : (tidx + 1).toString()));
-			row.appendChild(telt("th", tidx2 == null ? "" : (tidx2 + 1).toString()));
-			row.appendChild(ctelt("td", change, textLines[tidx != null ? tidx : tidx2].replace(/\t/g, "\u00a0\u00a0\u00a0\u00a0")));
+			row.appendChild(telt('th', tidx == null ? '' : (tidx + 1).toString()));
+			row.appendChild(telt('th', tidx2 == null ? '' : (tidx2 + 1).toString()));
+			row.appendChild(ctelt('td', change, textLines[tidx != null ? tidx : tidx2].replace(/\t/g, '\u00a0\u00a0\u00a0\u00a0')));
 		}
 
 		for (var idx = 0; idx < opcodes.length; idx++) {
@@ -137,19 +137,19 @@ diffview = {
 			var toprows = [];
 			var botrows = [];
 			for (var i = 0; i < rowcnt; i++) {
-				// jump ahead if we've alredy provided leading context or if this is the first range
-				if (contextSize && opcodes.length > 1 && ((idx > 0 && i == contextSize) || (idx == 0 && i == 0)) && change=="equal") {
+				// jump ahead if we've already provided leading context or if this is the first range
+				if (contextSize && opcodes.length > 1 && ((idx > 0 && i == contextSize) || (idx == 0 && i == 0)) && change=='equal') {
 					var jump = rowcnt - ((idx == 0 ? 1 : 2) * contextSize);
 					if (jump > 1) {
-						toprows.push(node = document.createElement("tr"));
+						toprows.push(node = document.createElement('tr'));
 
 						b += jump;
 						n += jump;
 						i += jump - 1;
-						node.appendChild(telt("th", "..."));
-						if (!inline) node.appendChild(ctelt("td", "skip", ""));
-						node.appendChild(telt("th", "..."));
-						node.appendChild(ctelt("td", "skip", ""));
+						node.appendChild(telt('th', '...'));
+						if (!inline) node.appendChild(ctelt('td', 'skip', ''));
+						node.appendChild(telt('th', '...'));
+						node.appendChild(ctelt('td', 'skip', ''));
 
 						// skip last lines if they're all equal
 						if (idx + 1 == opcodes.length) {
@@ -160,26 +160,26 @@ diffview = {
 					}
 				}
 
-				toprows.push(node = document.createElement("tr"));
+				toprows.push(node = document.createElement('tr'));
 				if (inline) {
-					if (change == "insert") {
+					if (change == 'insert') {
 						addCellsInline(node, null, n++, newTextLines, change);
-					} else if (change == "replace") {
-						botrows.push(node2 = document.createElement("tr"));
-						if (b < be) addCellsInline(node, b++, null, baseTextLines, "delete");
-						if (n < ne) addCellsInline(node2, null, n++, newTextLines, "insert");
-					} else if (change == "delete") {
+					} else if (change == 'replace') {
+						botrows.push(node2 = document.createElement('tr'));
+						if (b < be) addCellsInline(node, b++, null, baseTextLines, 'delete');
+						if (n < ne) addCellsInline(node2, null, n++, newTextLines, 'insert');
+					} else if (change == 'delete') {
 						addCellsInline(node, b++, null, baseTextLines, change);
 					} else {
 						// equal
 						addCellsInline(node, b++, n++, baseTextLines, change);
 					}
 				} else {
-					var wdiff = diffString2(b < be ? baseTextLines[b]:"", n < ne ? newTextLines[n]:"");
+					var wdiff = diffString2(b < be ? baseTextLines[b]:'', n < ne ? newTextLines[n]:'');
 					if(b < be) baseTextLines[b] = wdiff.o;
 					if(n < ne)newTextLines[n] = wdiff.n;
-					b = addCells(node, b, be, baseTextLines, change=="replace" ? "delete" : change);
-					n = addCells(node, n, ne, newTextLines, change=="replace" ? "insert" : change);
+					b = addCells(node, b, be, baseTextLines, change=='replace' ? 'delete' : change);
+					n = addCells(node, n, ne, newTextLines, change=='replace' ? 'insert' : change);
 				}
 			}
 
@@ -190,13 +190,13 @@ diffview = {
 		var msg = "combined <a href='http://snowtide.com/jsdifflib'>jsdifflib</a> ";
 		msg += "and John Resig's <a href='http://ejohn.org/projects/javascript-diff-algorithm/'>diff</a> ";
 		msg += "by <a href='http://richardbondi.net'>Richard Bondi</a>";
-		rows.push(node = ctelt("th", "author", msg));
-		node.setAttribute("colspan", inline ? 3 : 4);
+		rows.push(node = ctelt('th', 'author', msg));
+		node.setAttribute('colspan', inline ? 3 : 4);
 
-		tdata.push(node = document.createElement("tbody"));
+		tdata.push(node = document.createElement('tbody'));
 		for (var idx in rows) rows.hasOwnProperty(idx) && node.appendChild(rows[idx]);
 
-		node = celt("table", "diff" + (inline ? " inlinediff" : ""));
+		node = celt('table', 'diff' + (inline ? ' inlinediff' : ''));
 		for (var idx in tdata) tdata.hasOwnProperty(idx) && node.appendChild(tdata[idx]);
 		return node;
 	}
