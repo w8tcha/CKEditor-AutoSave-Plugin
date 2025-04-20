@@ -259,6 +259,10 @@
         if (localStorage.getItem(autoSaveKey)) {
             var jsonSavedContent = LoadData(autoSaveKey);
 
+            if (!isJson(jsonSavedContent)) {
+	            return;
+            }
+
             const autoSavedContent = jsonSavedContent.data;
             const autoSavedContentDate = jsonSavedContent.saveTime;
 
@@ -280,6 +284,11 @@
             if (config.autoLoad) {
                 if (localStorage.getItem(autoSaveKey)) {
                     var jsonSavedContent = LoadData(autoSaveKey);
+
+                    if (!isJson(jsonSavedContent)) {
+	                    return;
+                    }
+
                     editorInstance.setData(jsonSavedContent.data);
 
                     if (config.removeStorageAfterAutoLoad) {
@@ -437,5 +446,16 @@
                 return url;
             }
         }
+    }
+
+    function isJson(item) {
+	    let value = typeof item !== 'string' ? JSON.stringify(item) : item;
+	    try {
+		    value = JSON.parse(value);
+	    } catch (e) {
+		    return false;
+	    }
+
+	    return typeof value === 'object' && value !== null;
     }
 })();
