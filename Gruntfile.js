@@ -7,6 +7,7 @@
  */
 module.exports = function(grunt) {
 
+  require('@lodder/time-grunt')(grunt);
   // CONFIGURATION
   grunt.initConfig({
       pkg: grunt.file.readJSON("package.json"),
