@@ -45,23 +45,13 @@ module.exports = function(grunt) {
                   "autosave/css/autosave.min.css": "autosave/css/autosave.css",
               }
           }
-      },
-      devUpdate: {
-            main: {
-                options: {
-                    reportUpdated: true,
-					updateType: "force",
-					semver: false
-                }
-            }
-        }
+      }
   });
 
   // PLUGINS
   grunt.loadNpmTasks("grunt-contrib-watch");
   grunt.loadNpmTasks("grunt-contrib-cssmin");
   grunt.loadNpmTasks("grunt-contrib-uglify");
-  grunt.loadNpmTasks("@w8tcha/grunt-dev-update");
 
 
   grunt.registerTask("watch",
@@ -71,8 +61,7 @@ module.exports = function(grunt) {
       ]);
 
   grunt.registerTask("default", [
-      "devUpdate",
-	  "uglify",
+      "uglify",
       "cssmin"
     ]);
 
