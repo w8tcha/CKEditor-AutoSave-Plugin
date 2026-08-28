@@ -4,6 +4,11 @@
  */
 
 (function() {
+    // Remembers the user's answer to the "load saved content?" confirm() for the
+    // lifetime of the page, so a page with several autosave-enabled fields asks
+    // this question once instead of once per field.
+    var pageLoadDecision = null;
+
     if (!supportsLocalStorage()) {
         CKEDITOR.plugins.add('autosave', {}); //register a dummy plugin to pass CKEditor plugin initialization process
         return;
@@ -296,11 +301,15 @@
                     }
                 }
             } else {
-                const confirmMessage = editorInstance.lang.autosave.loadSavedContent.replace('{0}',
-                    moment(autoSavedContentDate).locale(editorInstance.config.language)
-                    .format(editorInstance.lang.autosave.dateFormat));
+                if (pageLoadDecision === null) {
+                    const confirmMessage = editorInstance.lang.autosave.loadSavedContent.replace('{0}',
+                        moment(autoSavedContentDate).locale(editorInstance.config.language)
+                        .format(editorInstance.lang.autosave.dateFormat));
 
-                if (confirm(confirmMessage)) {
+                    pageLoadDecision = confirm(confirmMessage);
+                }
+
+                if (pageLoadDecision) {
                     // Open DIFF Dialog
                     editorInstance.openDialog('autosaveDialog');
                 } else {
