@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "lz-string": "^1.5.0",
-    "moment": "^2.30.1"
+    "moment": "^2.31.0"
   },
   "scripts": {
     "update-deps": "set npm_config_allow_scripts=&& npm-check -y",
